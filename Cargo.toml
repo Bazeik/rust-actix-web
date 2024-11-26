@@ -1,0 +1,21 @@
+[package]
+name = "bazeik_rust_backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+actix-rt = "2"
+sea-orm = { version = "1.1.1", features = ["sqlx-postgres", "runtime-actix-rustls", "macros"] }
+tokio = { version = "1", features = ["full"] }
+dotenv = "0.15"
+chrono = "0.4"
+async-trait = "0.1"
+sea-orm-migration = "1.1.1"
+argon2 = "0.5.3"
+clap = { version = "4.1", features = ["derive"] }
+rand = "0.8"
+
+[[bin]]
+name = "rust_backend"
+path = "src/main.rs"

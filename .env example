@@ -1,0 +1,10 @@
+RUST_BACKTRACE=1
+# PostgreSQL Credentials
+POSTGRES_USER=          # PostgreSQL username
+POSTGRES_PASSWORD=      # PostgreSQL password
+POSTGRES_DB=            # PostgreSQL database name
+
+# Application Configuration
+DB_HOST=                # Hostname for the database (matches the service name in Docker Compose)
+DB_PORT=                # PostgreSQL port
+DATABASE_URL=           # Database connection string

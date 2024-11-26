@@ -1,0 +1,51 @@
+services:
+  rust_backend:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+    volumes:
+      - .:/app
+      - /app/target
+    depends_on:
+      - db
+    networks:
+      - shared_network
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    networks:
+      - shared_network
+
+  sea-orm-cli:
+    image: rust:1.82.0
+    working_dir: /app
+    volumes:
+      - .:/app
+    entrypoint: ["sh", "-c"]
+    networks:
+      - shared_network
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}
+    command: |
+      cargo install sea-orm-cli &&
+      sea-orm-cli generate entity -u $DATABASE_URL -o src/entities
+
+volumes:
+  db_data:
+
+networks:
+  shared_network:
+    driver: bridge
