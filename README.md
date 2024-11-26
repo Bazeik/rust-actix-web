@@ -14,25 +14,33 @@ A web service built with Actix-Web framework and database integration.
 
 The project is organized into several modules and directories, each serving a specific purpose:
 
-- **`src/`**: The main source directory for the Rust application.
-  - **`main.rs`**: The entry point of the application, responsible for initializing and running the web service.
-  - **`db_cli.rs`**: Contains the command-line interface (CLI) definitions using the `clap` library. It includes the `Cli` struct and `Commands` enum to parse and handle CLI arguments.
-  - **`utils/`**: A directory containing utility modules.
-    - **`macros/`**: Contains macro definitions used throughout the application.
-      - **`handle_cli.rs`**: Defines a macro to handle CLI commands, such as database migrations and seeding.
-    - **`mod.rs`**: The module file that re-exports the submodules within the `utils` directory.
+```bash
 
-- **`migration/`**: Contains migration-related code and scripts.
-  - **`src/`**: Contains Rust code for managing database migrations.
-    - **`main.rs`**: The entry point for running migrations, typically using the `sea_orm_migration` library.
-
-- **`Dockerfile`**: Defines the Docker image for the Rust application, including the build process and runtime configuration.
-
-- **`docker-compose.yml`**: Configures multiple services using Docker Compose, such as the Rust application (`rust_backend`), a PostgreSQL database (`db`), and possibly a CLI tool (`sea-orm-cli`).
-
-- **`.env`**: A file containing environment variables for configuring the application, such as database credentials and connection strings.
-
-- **`README.md`**: Provides documentation and instructions for setting up and running the application.
+rust-actix-web/
+├── Dockerfile                  # Defines the Docker image for the application
+├── docker-compose.yml          # Configures multi-service Docker setup
+├── .env                        # Environment variables for the application
+├── README.md                   # Project documentation and instructions
+├── src/                        # Main source code directory
+│   ├── main.rs                 # Entry point for the application
+│   ├── db_cli.rs               # CLI command definitions using the clap library
+│   ├── utils/                  # Utility modules
+│   │   ├── macros/             # Macro definitions used across the app
+│   │   ├── handle_cli.rs       # Macro for handling CLI commands
+│   │   └── mod.rs              # Re-exports submodules in the utils directory
+│   ├── services/               # Service modules for the application
+│   │   └── users.rs            # Example: User-related services
+│   └── entities/               # Entity definitions for database models
+│       └── prelude.rs          # Re-exports common entity traits and types
+├── migration/                  # Database migration-related code
+│   ├── src/                    # Migration source code
+│   │   ├── main.rs             # Entry point for running migrations
+│   │   └── migrations.rs       # Migration logic and definitions
+│   └── Cargo.toml              # Dependencies for the migration system
+└── seeders/                    # Seed data for the database
+    ├── user_seeder.rs          # Seeds the user table with initial data
+    └── mod.rs                  # Seeder module to combine and manage seeders
+```
 
 This modular structure allows for a clean separation of concerns, making the application easier to maintain and extend. Each module has a specific responsibility, such as handling CLI commands, managing database migrations, or providing utility functions.
 
